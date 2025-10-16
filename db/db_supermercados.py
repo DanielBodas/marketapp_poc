@@ -1,4 +1,4 @@
-from db.connection import get_session
+from db.connection import get_session, session_scope
 from db.models import Supermercado
 from sqlalchemy.exc import IntegrityError
 
@@ -7,44 +7,36 @@ def obtener_supermercados():
     return session.query(Supermercado).order_by(Supermercado.nombre_supermercado).all()
 
 def insertar_supermercado(nombre: str):
-    session = get_session()
     nuevo = Supermercado(nombre_supermercado=nombre)
-    session.add(nuevo)
     try:
-        session.commit()
+        with session_scope() as session:
+            session.add(nuevo)
         return True, "Supermercado registrado correctamente."
     except IntegrityError:
-        session.rollback()
         return False, "Ya existe un supermercado con ese nombre."
     except Exception as e:
-        session.rollback()
         return False, f"Error inesperado: {str(e)}"
 
 def actualizar_supermercado(id_supermercado: int, nuevo_nombre: str):
-    session = get_session()
-    supermercado = session.query(Supermercado).get(id_supermercado)
-    if supermercado:
-        supermercado.nombre_supermercado = nuevo_nombre
-        try:
-            session.commit()
-            return True, "Supermercado actualizado correctamente."
-        except IntegrityError:
-            session.rollback()
-            return False, "Ya existe otro supermercado con ese nombre."
-        except Exception as e:
-            session.rollback()
-            return False, f"Error inesperado: {str(e)}"
-    return False, "Supermercado no encontrado."
+    try:
+        with session_scope() as session:
+            supermercado = session.get(Supermercado, id_supermercado)
+            if not supermercado:
+                return False, "Supermercado no encontrado."
+            supermercado.nombre_supermercado = nuevo_nombre
+        return True, "Supermercado actualizado correctamente."
+    except IntegrityError:
+        return False, "Ya existe otro supermercado con ese nombre."
+    except Exception as e:
+        return False, f"Error inesperado: {str(e)}"
 
 def eliminar_supermercado(id_supermercado: int):
-    session = get_session()
-    supermercado = session.query(Supermercado).get(id_supermercado)
-    if supermercado:
-        try:
+    try:
+        with session_scope() as session:
+            supermercado = session.get(Supermercado, id_supermercado)
+            if not supermercado:
+                return False, "Supermercado no encontrado."
             session.delete(supermercado)
-            session.commit()
-            return True, "Supermercado eliminado correctamente."
-        except Exception as e:
-            session.rollback()
-            return False, f"Error al eliminar: {str(e)}"
-    return False, "Supermercado no encontrado."
+        return True, "Supermercado eliminado correctamente."
+    except Exception as e:
+        return False, f"Error al eliminar: {str(e)}"

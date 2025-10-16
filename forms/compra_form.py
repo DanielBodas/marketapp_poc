@@ -1,6 +1,38 @@
 import streamlit as st
 from datetime import date
 
+def compra_form_ui(productos, marcas, supermercados):
+    st.header("🛒 Registro de Compra")
+
+    if not productos or not marcas or not supermercados:
+        st.error("❌ No se puede cargar el formulario. Verifica que existan productos, marcas y supermercados en la base de datos.")
+        return None, None, []
+
+    inicializar_estado()
+
+    # Datos generales
+    col1, col2 = st.columns(2)
+    supermercado = col1.selectbox("Supermercado", supermercados, format_func=lambda x: x.nombre_supermercado)
+    fecha = col2.date_input("Fecha de compra", value=date.today())
+
+    st.subheader("🧾 Productos del ticket")
+
+    # Mostrar líneas existentes
+    for i in range(len(st.session_state.lineas_compra)):
+        mostrar_linea_compra(i, productos, marcas)
+
+    # Añadir nueva línea
+    if st.button("➕ Añadir producto"):
+        st.session_state.lineas_compra.append({
+            "producto": productos[0],
+            "marca": marcas[0],
+            "precio": 0.0,
+            "cantidad": 1
+        })
+        st.rerun()
+
+    return supermercado, fecha, st.session_state.lineas_compra
+
 def inicializar_estado():
     if "lineas_compra" not in st.session_state:
         st.session_state.lineas_compra = []
@@ -35,35 +67,3 @@ def mostrar_linea_compra(i, productos, marcas):
     if eliminar:
         st.session_state.lineas_compra.pop(i)
         st.rerun()
-
-def compra_form_ui(productos, marcas, supermercados):
-    st.header("🛒 Registro de Compra")
-
-    if not productos or not marcas or not supermercados:
-        st.error("❌ No se puede cargar el formulario. Verifica que existan productos, marcas y supermercados en la base de datos.")
-        return None, None, []
-
-    inicializar_estado()
-
-    # Datos generales
-    col1, col2 = st.columns(2)
-    supermercado = col1.selectbox("Supermercado", supermercados, format_func=lambda x: x.nombre_supermercado)
-    fecha = col2.date_input("Fecha de compra", value=date.today())
-
-    st.subheader("🧾 Productos del ticket")
-
-    # Mostrar líneas existentes
-    for i in range(len(st.session_state.lineas_compra)):
-        mostrar_linea_compra(i, productos, marcas)
-
-    # Añadir nueva línea
-    if st.button("➕ Añadir producto"):
-        st.session_state.lineas_compra.append({
-            "producto": productos[0],
-            "marca": marcas[0],
-            "precio": 0.0,
-            "cantidad": 1
-        })
-        st.rerun()
-
-    return supermercado, fecha, st.session_state.lineas_compra

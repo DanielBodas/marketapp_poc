@@ -1,7 +1,21 @@
 import streamlit as st
-from db.db_productos import *
-from db.db_marcas import *
-from db.db_producto_marca import *
+from db.db_productos import (
+    obtener_productos,
+    insertar_producto,
+    actualizar_producto,
+    eliminar_producto,
+)
+from db.db_marcas import (
+    obtener_marcas,
+    insertar_marca,
+    actualizar_marca,
+    eliminar_marca,
+)
+from db.db_producto_marca import (
+    obtener_relaciones_producto_marca,
+    insertar_relacion_producto_marca,
+    eliminar_relacion_producto_marca,
+)
 from utils.db_errors import mostrar_error_db
 
 def producto_marca_crud_ui():
