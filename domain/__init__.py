@@ -1,0 +1,1 @@
+"""Módulo de dominio para manejo de cálculos y lógica de negocio"""

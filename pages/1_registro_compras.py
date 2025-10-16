@@ -23,6 +23,7 @@ def main():
                 registrar_compras(fecha, supermercado.id_supermercado, lineas)
                 st.success("✅ Compra registrada correctamente.")
                 st.session_state.lineas_compra = []
+                st.rerun()
 
     except Exception as e:
         mostrar_error_db(e, contexto="Registro de compra")
