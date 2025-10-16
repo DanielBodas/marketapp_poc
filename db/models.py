@@ -65,6 +65,32 @@ class Compra(Base):
     id_supermercado = Column(Integer, ForeignKey("supermercados.id_supermercado"), nullable=False)
     id_producto = Column(Integer, ForeignKey("productos.id_producto"), nullable=False)
     id_marca = Column(Integer, ForeignKey("marcas.id_marca"), nullable=False)
+    id_unidad = Column(Integer, ForeignKey("unidades.id_unidad"), nullable=False)
 
     precio = Column(Float, nullable=False)
     cantidad = Column(Integer, nullable=False)
+
+
+# ---- UNIDAD ----
+class Unidad(Base):
+    __tablename__ = "unidades"
+
+    """Tabla que almacena las unidades disponibles para productos (ej. unidad, litro, kg)."""
+
+    id_unidad = Column(Integer, primary_key=True)
+    nombre_unidad = Column(String, unique=True, nullable=False)
+
+
+# ---- RELACIÓN PRODUCTO ↔ UNIDAD ----
+class ProductoUnidad(Base):
+    __tablename__ = "productos_unidades"
+
+    """Tabla intermedia que relaciona productos con las unidades disponibles para ellos."""
+
+    id_producto_unidad = Column(Integer, primary_key=True)
+    id_producto = Column(Integer, ForeignKey("productos.id_producto"), nullable=False)
+    id_unidad = Column(Integer, ForeignKey("unidades.id_unidad"), nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint("id_producto", "id_unidad", name="uq_producto_unidad"),
+    )
