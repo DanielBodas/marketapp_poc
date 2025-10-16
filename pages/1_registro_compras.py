@@ -4,7 +4,7 @@ from db.db_marcas import obtener_marcas
 from db.db_supermercados import obtener_supermercados
 from db.db_compras import registrar_compras
 from forms.compra_form import compra_form_ui
-from utils.db_errors import handle_db_error
+from utils.db_errors import mostrar_error_db
 
 st.set_page_config(page_title="Registro de Compras", page_icon="🛒", layout="wide")
 
@@ -25,7 +25,7 @@ def main():
                 st.session_state.lineas_compra = []
 
     except Exception as e:
-        handle_db_error(e, context="Registro de compra")
+        mostrar_error_db(e, context="Registro de compra")
 
 if __name__ == "__main__":
     main()
