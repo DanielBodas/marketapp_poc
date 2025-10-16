@@ -5,6 +5,7 @@ Base = declarative_base()
 
 # ---- CLASIFICACIÓN ----
 class Clasificacion(Base):
+    """Tabla de clasificaciones de productos."""
     __tablename__ = "clasificaciones"
 
     id_clasificacion = Column(Integer, primary_key=True)
@@ -13,6 +14,7 @@ class Clasificacion(Base):
 
 # ---- MARCA ----
 class Marca(Base):
+    """Tabla de marcas."""
     __tablename__ = "marcas"
 
     id_marca = Column(Integer, primary_key=True)
@@ -21,6 +23,7 @@ class Marca(Base):
 
 # ---- PRODUCTO ----
 class Producto(Base):
+    """Tabla de productos."""
     __tablename__ = "productos"
 
     id_producto = Column(Integer, primary_key=True)
@@ -29,6 +32,7 @@ class Producto(Base):
 
 # ---- SUPERMERCADO ----
 class Supermercado(Base):
+    """Tabla de supermercados."""
     __tablename__ = "supermercados"
 
     id_supermercado = Column(Integer, primary_key=True)
@@ -52,6 +56,7 @@ class ProductoMarca(Base):
 
 # ---- COMPRA ----
 class Compra(Base):
+    """Tabla de compras realizadas."""
     __tablename__ = "compras"
 
     id_compra = Column(Integer, primary_key=True)
