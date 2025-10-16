@@ -22,7 +22,7 @@ def insertar_supermercado(nombre: str):
 
 def actualizar_supermercado(id_supermercado: int, nuevo_nombre: str):
     session = get_session()
-    supermercado = session.query(Supermercado).get(id_supermercado)
+    supermercado = session.get(Supermercado, id_supermercado)
     if supermercado:
         supermercado.nombre_supermercado = nuevo_nombre
         try:
@@ -38,7 +38,7 @@ def actualizar_supermercado(id_supermercado: int, nuevo_nombre: str):
 
 def eliminar_supermercado(id_supermercado: int):
     session = get_session()
-    supermercado = session.query(Supermercado).get(id_supermercado)
+    supermercado = session.get(Supermercado, id_supermercado)
     if supermercado:
         try:
             session.delete(supermercado)

@@ -22,7 +22,7 @@ def insertar_marca(nombre: str):
 
 def actualizar_marca(id_marca: int, nuevo_nombre: str):
     session = get_session()
-    marca = session.query(Marca).get(id_marca)
+    marca = session.get(Marca, id_marca)
     if marca:
         marca.nombre_marca = nuevo_nombre
         try:
@@ -38,7 +38,7 @@ def actualizar_marca(id_marca: int, nuevo_nombre: str):
 
 def eliminar_marca(id_marca: int):
     session = get_session()
-    marca = session.query(Marca).get(id_marca)
+    marca = session.get(Marca, id_marca)
     if marca:
         try:
             session.delete(marca)

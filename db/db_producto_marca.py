@@ -22,7 +22,7 @@ def insertar_relacion_producto_marca(id_producto: int, id_marca: int):
 
 def eliminar_relacion_producto_marca(id_producto_marca: int):
     session = get_session()
-    relacion = session.query(ProductoMarca).get(id_producto_marca)
+    relacion = session.get(ProductoMarca, id_producto_marca)
     if relacion:
         try:
             session.delete(relacion)

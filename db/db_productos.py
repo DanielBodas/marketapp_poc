@@ -22,7 +22,7 @@ def insertar_producto(nombre: str):
 
 def actualizar_producto(id_producto: int, nuevo_nombre: str):
     session = get_session()
-    producto = session.query(Producto).get(id_producto)
+    producto = session.get(Producto, id_producto)
     if producto:
         producto.nombre_producto = nuevo_nombre
         try:
@@ -38,7 +38,7 @@ def actualizar_producto(id_producto: int, nuevo_nombre: str):
 
 def eliminar_producto(id_producto: int):
     session = get_session()
-    producto = session.query(Producto).get(id_producto)
+    producto = session.get(Producto, id_producto)
     if producto:
         try:
             session.delete(producto)
