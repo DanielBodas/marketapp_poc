@@ -17,11 +17,11 @@ def compra_form_ui(productos, marcas, supermercados):
 
     st.subheader("🧾 Productos del ticket")
 
-    # Manejo de líneas
+    # Mostrar líneas existentes
     for i in range(len(st.session_state.lineas_compra)):
         mostrar_linea_compra(i, productos, marcas)
 
-    # Botón para añadir nueva línea
+    # Añadir nueva línea
     if st.button("➕ Añadir producto"):
         st.session_state.lineas_compra.append({
             "producto": productos[0],
@@ -31,15 +31,7 @@ def compra_form_ui(productos, marcas, supermercados):
         })
         st.rerun()
 
-    # Formulario para enviar todas las líneas
-    with st.form("form_compra"):
-        st.write("Confirma los datos del ticket")
-        submit = st.form_submit_button("✅ Guardar compra")
-
-    if submit:
-        return supermercado, fecha, st.session_state.lineas_compra
-    else:
-        return None, None, []
+    return supermercado, fecha, st.session_state.lineas_compra
 
 def inicializar_estado():
     if "lineas_compra" not in st.session_state:
@@ -63,6 +55,7 @@ def mostrar_linea_compra(i, productos, marcas):
     cantidad = cols[3].number_input("Cantidad", min_value=1, step=1, key=f"cantidad_{i}", value=linea["cantidad"])
     eliminar = cols[4].button("🗑️", key=f"del_{i}")
 
+    # Actualizar línea
     st.session_state.lineas_compra[i] = {
         "producto": producto,
         "marca": marca,
@@ -70,7 +63,7 @@ def mostrar_linea_compra(i, productos, marcas):
         "cantidad": cantidad
     }
 
+    # Eliminar línea si se pulsa el botón
     if eliminar:
         st.session_state.lineas_compra.pop(i)
         st.rerun()
-

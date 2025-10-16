@@ -25,7 +25,7 @@ def main():
                 st.session_state.lineas_compra = []
 
     except Exception as e:
-        mostrar_error_db(e, context="Registro de compra")
+        mostrar_error_db(e, contexto="Registro de compra")
 
 if __name__ == "__main__":
     main()
