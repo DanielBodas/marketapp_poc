@@ -9,6 +9,7 @@ def registrar_compras(fecha, supermercado_id, lineas):
                 id_supermercado=supermercado_id,
                 id_producto=linea["producto"].id_producto,
                 id_marca=linea["marca"].id_marca,
+                id_unidad=linea["unidad"].id_unidad,
                 precio=linea["precio"],
                 cantidad=linea["cantidad"]
             )

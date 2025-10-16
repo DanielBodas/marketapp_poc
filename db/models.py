@@ -65,6 +65,7 @@ class Compra(Base):
     id_supermercado = Column(Integer, ForeignKey("supermercados.id_supermercado"), nullable=False)
     id_producto = Column(Integer, ForeignKey("productos.id_producto"), nullable=False)
     id_marca = Column(Integer, ForeignKey("marcas.id_marca"), nullable=False)
+    id_unidad = Column(Integer, ForeignKey("unidades.id_unidad"), nullable=False)
 
     precio = Column(Float, nullable=False)
     cantidad = Column(Integer, nullable=False)

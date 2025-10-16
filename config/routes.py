@@ -20,4 +20,12 @@ PAGES = {
         "description": "Administra tu catálogo de productos y marcas.",
         "file": "pages/3_productos_marcas.py"
     }
+    ,
+    "4_unidades": {
+        "label": "Unidades",
+        "icon": "⚖️",
+        "image": "https://cdn-icons-png.flaticon.com/512/2910/2910799.png",
+        "description": "Gestiona unidades (kg, litro, unidad) y relaciones con productos.",
+        "file": "pages/4_unidades.py"
+    }
 }
