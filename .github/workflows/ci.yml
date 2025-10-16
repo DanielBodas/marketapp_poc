@@ -27,4 +27,5 @@ jobs:
           pytest -q tests/test_db_models.py
       - name: Run quality tests
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           pytest -q tests/test_quality.py
